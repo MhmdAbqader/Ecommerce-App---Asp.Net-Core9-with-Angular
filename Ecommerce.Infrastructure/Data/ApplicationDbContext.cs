@@ -22,8 +22,8 @@ namespace Ecommerce.Infrastructure.Data
             modelBuilder.Entity<Category>().HasData(new Category {Name = "c1",Id=1 , Description="first category" });
             
             modelBuilder.Entity<Product>().HasData(
-                new Product {Name = "p1",Id=1 , Description="first product",Price=90,CategoryId=1 },
-                new Product {Name = "p2",Id=2 , Description= "second product", Price=90,CategoryId=1 }
+                new Product {Name = "p1",Id=1 , Description="first product",Price=90,CategoryId=1 , ImgURL = "http://"},
+                new Product {Name = "p2",Id=2 , Description= "second product", Price=90,CategoryId=1, ImgURL = "http://" }
                 );
         }
 

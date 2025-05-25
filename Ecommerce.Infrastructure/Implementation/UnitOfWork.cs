@@ -5,22 +5,32 @@ using System.Text;
 using System.Threading.Tasks;
 using Ecommerce.Core.Interfaces;
 using Ecommerce.Infrastructure.Data;
+using Ecommerce.Infrastructure.Implementation;
+using Microsoft.Extensions.FileProviders;
+using StackExchange.Redis;
 
 namespace Ecommerce.Infrastructure.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
+ 
+        private readonly IFileProvider _fileProvider;
+        //private readonly IConnectionMultiplexer _redisConnectionMultiplexer;
+
         public ICategoryRepository CategoryRepository { get; }
 
         public IProductRepository ProductRepository { get; }
+        public IBasketRepository BasketRepository { get; }
 
 
-        public UnitOfWork(ApplicationDbContext context)
+        public UnitOfWork(ApplicationDbContext context, IFileProvider fileProvider, IConnectionMultiplexer redis)
         {
-            _context = context;
+            _context = context; 
+            _fileProvider = fileProvider;             
             CategoryRepository = new CategoryRepository(_context);
-            ProductRepository = new ProductRepository(_context);
+            ProductRepository = new ProductRepository(_context,_fileProvider);
+            BasketRepository = new BasketRepository(redis);
         }
 
 
@@ -31,7 +41,7 @@ namespace Ecommerce.Infrastructure.Repositories
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _context.Dispose();
         }
     }
 }

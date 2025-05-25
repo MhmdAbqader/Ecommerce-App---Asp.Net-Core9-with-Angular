@@ -10,7 +10,7 @@ namespace Ecommerce.Core.Interfaces
     {
         ICategoryRepository CategoryRepository { get; }
         IProductRepository ProductRepository { get; }
-        //IShoppingCartRepository ShoppingCartRepository { get; }
+        IBasketRepository BasketRepository{ get; }
         //IOrderHeaderRepository OrderHeaderRepository { get; }
         //IOrderDetailsRepository OrderDetailsRepository { get; }
         int Complete();
