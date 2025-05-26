@@ -1,4 +1,5 @@
-﻿using Ecommerce.Core.Interfaces;
+﻿using Ecommerce.Core.DTOs;
+using Ecommerce.Core.Interfaces;
 using Ecommerce.Core.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,8 +24,24 @@ namespace Ecommerce.Api.Controllers
         }
 
         [HttpPost("UpdateBasketItem")]
-        public async Task<IActionResult> UpdateBasketItem(CustomerBasket customerBasket)
+        public async Task<IActionResult> UpdateBasketItem(CustomerBasketDto customerBasketDto)
         {
+            CustomerBasket customerBasket = new CustomerBasket() 
+            {
+                UserId = customerBasketDto.userId,                
+            };
+            foreach (var item in customerBasketDto.BasketItemsDto)
+            {
+                customerBasket.BasketItems.Add(new BasketItem 
+                { 
+                    Id = item.Id, 
+                    ProductName = item.ProductName,
+                    CategoryName = item.categoryName,
+                    Price = item.Price,
+                    Quantity = item.Quantity
+                });
+            }
+
             var basket = await _unitOfWork.BasketRepository.UpdateBasketAsync(customerBasket);
             return Ok(basket);
         }
