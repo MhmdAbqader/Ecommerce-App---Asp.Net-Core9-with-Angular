@@ -5,8 +5,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Ecommerce.Core.Interfaces;
 using Ecommerce.Core.Models;
+using Ecommerce.Core.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -38,7 +38,7 @@ namespace Ecommerce.Infrastructure.Implementation
                 Subject = new ClaimsIdentity(claims),
                 Issuer = _configuration["token:issuer"],
                 SigningCredentials = credentiasl,
-                Expires = DateTime.Now.AddDays(3)
+                Expires = DateTime.Now.AddSeconds(50)
             };
             var tokenHandler = new JwtSecurityTokenHandler();
             var myToken = tokenHandler.CreateToken(tokenDescriptor);

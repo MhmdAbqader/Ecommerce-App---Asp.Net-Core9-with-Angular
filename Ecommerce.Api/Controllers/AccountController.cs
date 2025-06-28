@@ -1,8 +1,8 @@
 ﻿using System.Security.Claims;
 using Ecommerce.Api.Errors;
 using Ecommerce.Core.DTOs;
-using Ecommerce.Core.Interfaces;
 using Ecommerce.Core.Models;
+using Ecommerce.Core.Services;
 using Ecommerce.Infrastructure.Implementation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -36,11 +36,12 @@ namespace Ecommerce.Api.Controllers
         }
 
         [HttpPost("Login")]
+
         public async Task<ActionResult<UserDto>> Login(LoginDto userLoginDto)
         {
 
             var userExist = await _userManager.FindByEmailAsync(userLoginDto.Email);
-            if (userExist == null) { return Unauthorized(new BaseCommonResponseError(401)); }
+            if (userExist == null) { return Unauthorized(new BaseCommonResponseError(401, "User is Not Exists!!!")); }
 
             var checkPass = await _signInManager.CheckPasswordSignInAsync(userExist, userLoginDto.Password, true);
             if (checkPass is null || !checkPass.Succeeded)
@@ -59,7 +60,7 @@ namespace Ecommerce.Api.Controllers
 
         [HttpPost("Register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
-        {
+          {
             if (CheckEmailExist(registerDto.Email).Result.Value)
             {
                 return new BadRequestObjectResult(new List<string> { "This Email is Already Token" });
@@ -101,8 +102,8 @@ namespace Ecommerce.Api.Controllers
             };
         }
 
-        [HttpGet("CheckEmailExist")]
-        public async Task<ActionResult<bool>> CheckEmailExist([FromQuery] string email)
+        [HttpGet("CheckEmailExist/{email}")]
+        public async Task<ActionResult<bool>> CheckEmailExist(string email)
         {
             var result = await _userManager.FindByEmailAsync(email);
             if (result is not null)

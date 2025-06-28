@@ -46,7 +46,7 @@ namespace Ecommerce.Infrastructure.Repositories
             return await query.ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync(Expression<Func<T, bool>> criteria, string? includeTable = null)
+        public virtual async Task<T>  GetByIdAsync(Expression<Func<T, bool>> criteria, string? includeTable = null)
         {
             IQueryable<T> query = _context.Set<T>().AsQueryable();
 

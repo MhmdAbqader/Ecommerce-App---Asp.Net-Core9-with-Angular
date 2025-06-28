@@ -9,8 +9,7 @@ namespace Ecommerce.Core.Models
 {
     public class Category : BaseEntity<int>
     {
-        [Required]
-        [MaxLength(20)]
+
         public string Name { get; set; }
         public string Description { get; set; }
         //public ICollection<Product> Products { get; set; } = new HashSet<Product>();

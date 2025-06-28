@@ -3,6 +3,7 @@ using System.Text;
 using Ecommerce.Api.CustomMiddleware;
 using Ecommerce.Core.Interfaces;
 using Ecommerce.Core.Models;
+using Ecommerce.Core.Services;
 using Ecommerce.Infrastructure.Data;
 using Ecommerce.Infrastructure.Implementation;
 using Ecommerce.Infrastructure.Repositories;

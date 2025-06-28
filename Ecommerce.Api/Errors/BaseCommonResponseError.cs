@@ -3,6 +3,9 @@ namespace Ecommerce.Api.Errors
 {
     public class BaseCommonResponseError
     {
+        public int StatusCode { get; set; }
+        public string? Message { get; set; }
+
         public BaseCommonResponseError(int statusCode, string? message=null)
         {
             StatusCode = statusCode;
@@ -21,7 +24,6 @@ namespace Ecommerce.Api.Errors
             };
         }
 
-        public int StatusCode { get; set; }
-        public string? Message { get; set; }
+ 
     }
 }
